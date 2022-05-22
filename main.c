@@ -1,6 +1,7 @@
 #include <msp430.h> 
 #include <stdint.h>
 #include "msp430_timera.h"
+#include "msp430_uart.h"
 
 
 volatile uint8_t timer_count = 0;

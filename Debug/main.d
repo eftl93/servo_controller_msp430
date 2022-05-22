@@ -17,6 +17,7 @@ main.obj: C:/ti/ccs1110/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/mach
 main.obj: C:/ti/ccs1110/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/machine/_stdint.h
 main.obj: C:/ti/ccs1110/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/sys/_stdint.h
 main.obj: ../msp430_timera.h
+main.obj: ../msp430_uart.h
 
 ../main.c:
 
@@ -51,4 +52,6 @@ C:/ti/ccs1110/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/machine/_stdin
 C:/ti/ccs1110/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/sys/_stdint.h:
 
 ../msp430_timera.h:
+
+../msp430_uart.h:
 

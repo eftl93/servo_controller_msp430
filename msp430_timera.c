@@ -4,6 +4,8 @@
  *  Created on: May 21, 2022
  *      Author: eder0
  */
+#include <msp430.h>
+#include <stdint.h>
 #include "msp430_timera.h"
 
 void timera_cc_init(uint16_t capt_comp)

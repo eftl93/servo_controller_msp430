@@ -6,7 +6,11 @@
  */
 #include <msp430.h>
 #include <stdint.h>
+#include "main.h"
 #include "msp430_timera.h"
+
+volatile uint8_t timer_count = 0;
+
 
 void timera_cc_init(uint16_t capt_comp)
 {
@@ -17,3 +21,15 @@ void timera_cc_init(uint16_t capt_comp)
     TACCTL0 |= 0x0010; // CCIE = 1 ; enable the interrupt
 }
 
+#pragma vector = TIMER0_A0_VECTOR
+interrupt void TIMERA0_interrupt(void)
+{
+    timer_count++;
+    if(timer_count >= 20)
+    {
+        timer_count = 0;
+        led1_flag.toggle = 1;
+        __bic_SR_register_on_exit(LPM0_bits); //clears the bits in the passed variable
+    }
+
+}

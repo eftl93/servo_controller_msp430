@@ -16,6 +16,7 @@ msp430_timera.obj: C:/ti/ccs1110/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/inc
 msp430_timera.obj: C:/ti/ccs1110/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/machine/_types.h
 msp430_timera.obj: C:/ti/ccs1110/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/machine/_stdint.h
 msp430_timera.obj: C:/ti/ccs1110/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/sys/_stdint.h
+msp430_timera.obj: ../main.h
 msp430_timera.obj: ../msp430_timera.h
 
 ../msp430_timera.c:
@@ -49,6 +50,8 @@ C:/ti/ccs1110/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/machine/_types
 C:/ti/ccs1110/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/machine/_stdint.h:
 
 C:/ti/ccs1110/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/sys/_stdint.h:
+
+../main.h:
 
 ../msp430_timera.h:
 

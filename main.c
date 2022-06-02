@@ -10,18 +10,17 @@ struct flags led0_flag, servo0_flag, servo1_flag, servo2_flag, servo3_flag;
 
 volatile uint16_t servo0_duty = 33;
 volatile uint16_t servo1_duty = 16;
-volatile uint16_t servo2_duty = 33;
-volatile uint16_t servo3_duty = 33;
+volatile uint16_t servo2_duty = 65;
+volatile uint16_t servo3_duty = 32;
 /**
  * main.c
  */
 int main(void)
 {
-	//const uint16_t compare_reg = 50000;//set the capture compare register to 1/20 of a second assuming having a 1MHz clk
-	const uint16_t counter_x = 1000;
+	const uint16_t counter_x = 500;
 	uint8_t received_byte = 0xff;
     WDTCTL  = WDTPW | WDTHOLD;   // stop watchdog timer
-    BCSCTL1 =   CALBC1_16MHZ; //set range to 1MHz
+    BCSCTL1 =   CALBC1_16MHZ; //set range to 16MHz
     DCOCTL  =   CALDCO_16MHZ; //set DCO step + modulation
     BCSCTL2 &= 0xF0;
     uart_init();
@@ -56,46 +55,46 @@ int main(void)
              servo3_flag.toggle = 0;
              servo3_toggle();
          }
+
         received_byte = uart_rd_char();
         switch(received_byte)
         {
         case 'd'    :
-            if(servo0_duty < 33)
+            if(servo0_duty < 65)
                 servo0_duty++;
             break;
         case 'a'    :
-            if(servo0_duty > 16)
+            if(servo0_duty > 32)
                 servo0_duty--;
             break;
         case 'w'    :
-            if(servo1_duty < 33)
+            if(servo1_duty < 65)
                 servo1_duty++;
             break;
         case 's'    :
-            if(servo1_duty > 16)
+            if(servo1_duty > 32)
                 servo1_duty--;
             break;
 
         case 'l'    :
-            if(servo2_duty < 33)
+            if(servo2_duty < 65)
                 servo2_duty++;
             break;
         case 'j'    :
-            if(servo2_duty > 16)
+            if(servo2_duty > 32)
                 servo2_duty--;
             break;
         case 'i'    :
-            if(servo3_duty < 33)
+            if(servo3_duty < 65)
                 servo3_duty++;
             break;
         case 'k'    :
-            if(servo3_duty > 16)
+            if(servo3_duty > 32)
                 servo3_duty--;
             break;
 
         }
         __bis_SR_register(LPM0_bits | GIE); //enable the global interrupt and go to sleep
-        //__bis_SR_register(GIE); //enable the global interrupt and go to sleep
     }
 }
 

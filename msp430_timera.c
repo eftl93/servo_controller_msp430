@@ -54,7 +54,7 @@ interrupt void TIMERA0_interrupt(void)
         //__bic_SR_register_on_exit(LPM0_bits); //clears the bits in the passed variable
     }
 
-    if(timer_count >= 319)
+    if(timer_count >= 637)
     {
         timer_count = 0;
         servo0_flag.toggle = 1;

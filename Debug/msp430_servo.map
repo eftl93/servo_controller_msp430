@@ -1,7 +1,7 @@
 ******************************************************************************
                   MSP430 Linker PC v21.6.0                     
 ******************************************************************************
->> Linked Wed Jun  1 22:31:16 2022
+>> Linked Wed Jun  1 22:50:59 2022
 
 OUTPUT FILE NAME:   <msp430_servo.out>
 ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 0000c2c6
@@ -85,8 +85,7 @@ section   page    origin      length       input sections
                   0000c3a2    00000002                     : startup.c.obj (.text:_system_post_cinit)
 
 .cinit     0    0000c3a4    0000001e     
-                  0000c3a4    0000000b     (.cinit..data.load) [load image, compression = lzss]
-                  0000c3af    00000001     --HOLE-- [fill = 0]
+                  0000c3a4    0000000c     (.cinit..data.load) [load image]
                   0000c3b0    00000006     (__TI_handler_table)
                   0000c3b6    00000004     (.cinit..bss.load) [load image, compression = zero_init]
                   0000c3ba    00000008     (__TI_cinit_table)
@@ -191,15 +190,15 @@ MODULE SUMMARY
        Total:                       430    26        0      
                                                             
        Stack:                       0      0         80     
-       Linker Generated:            0      29        0      
+       Linker Generated:            0      30        0      
     +--+----------------------------+------+---------+---------+
-       Grand Total:                 932    57        98     
+       Grand Total:                 932    58        98     
 
 
 LINKER GENERATED COPY TABLES
 
 __TI_cinit_table @ 0000c3ba records: 2, size/record: 4, table size: 8
-	.data: load addr=0000c3a4, load size=0000000b bytes, run addr=0000020a, run size=00000008 bytes, compression=lzss
+	.data: load addr=0000c3a4, load size=0000000c bytes, run addr=0000020a, run size=00000008 bytes, compression=copy
 	.bss: load addr=0000c3b6, load size=00000004 bytes, run addr=00000200, run size=0000000a bytes, compression=zero_init
 
 

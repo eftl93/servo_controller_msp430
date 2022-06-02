@@ -13,7 +13,16 @@ struct flags {
     uint8_t state;
 };
 
-extern struct flags led1_flag, servo1_flag, servo2_flag, servo3_flag, servo4_flag;
-extern volatile uint8_t timer_count;
+extern struct flags led0_flag, servo0_flag, servo1_flag, servo2_flag, servo3_flag;
+extern volatile uint16_t timer_count;
+extern volatile uint16_t servo0_duty;
+extern volatile uint16_t servo1_duty;
+extern volatile uint16_t servo2_duty;
+extern volatile uint16_t servo3_duty;
+/*
+extern const double tick_length;
+extern double period;
+extern double compare_reg_double;
+*/
 
 #endif /* MAIN_H_ */

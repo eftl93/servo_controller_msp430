@@ -3,36 +3,99 @@
 #include "main.h"
 #include "msp430_timera.h"
 #include "msp430_uart.h"
+#include "msp430_led.h"
+#include "msp430_servo.h"
 
+struct flags led0_flag, servo0_flag, servo1_flag, servo2_flag, servo3_flag;
 
-
-struct flags led1_flag, servo1_flag, servo2_flag, servo3_flag, servo4_flag;
-
-
-
+volatile uint16_t servo0_duty = 33;
+volatile uint16_t servo1_duty = 16;
+volatile uint16_t servo2_duty = 33;
+volatile uint16_t servo3_duty = 33;
 /**
  * main.c
  */
 int main(void)
 {
-    WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
-    const uint16_t x = 50000; //set the capture compare register to 1/20 of a second assuming having a 1MHz clk
-    BCSCTL1 =   CALBC1_1MHZ; //set range to 1MHz
-    DCOCTL  =   CALDCO_1MHZ; //set DCO step + modulation
+	//const uint16_t compare_reg = 50000;//set the capture compare register to 1/20 of a second assuming having a 1MHz clk
+	const uint16_t counter_x = 1000;
+	uint8_t received_byte = 0xff;
+    WDTCTL  = WDTPW | WDTHOLD;   // stop watchdog timer
+    BCSCTL1 =   CALBC1_16MHZ; //set range to 1MHz
+    DCOCTL  =   CALDCO_16MHZ; //set DCO step + modulation
     BCSCTL2 &= 0xF0;
-    P1DIR |= 0x01; //p1.1 is output
-    timera_cc_init(x);
-
+    uart_init();
+    led_init();
+    servo_init();
+    timera_cc_init(counter_x);
 
     while(1)
     {
-        if(led1_flag.toggle == 1)
+
+
+        if(servo0_flag.toggle == 1)
         {
-            led1_flag.toggle = 0;
-            P1OUT ^= 0x01;
+            servo0_flag.toggle = 0;
+            servo0_toggle();
         }
 
-        _BIS_SR(LPM0_bits | GIE); //enable the global interrupt and go to sleep
+        if(servo1_flag.toggle == 1)
+        {
+            servo1_flag.toggle = 0;
+            servo1_toggle();
+        }
+
+        if(servo2_flag.toggle == 1)
+         {
+             servo2_flag.toggle = 0;
+             servo2_toggle();
+         }
+
+        if(servo3_flag.toggle == 1)
+         {
+             servo3_flag.toggle = 0;
+             servo3_toggle();
+         }
+        received_byte = uart_rd_char();
+        switch(received_byte)
+        {
+        case 'd'    :
+            if(servo0_duty < 33)
+                servo0_duty++;
+            break;
+        case 'a'    :
+            if(servo0_duty > 16)
+                servo0_duty--;
+            break;
+        case 'w'    :
+            if(servo1_duty < 33)
+                servo1_duty++;
+            break;
+        case 's'    :
+            if(servo1_duty > 16)
+                servo1_duty--;
+            break;
+
+        case 'l'    :
+            if(servo2_duty < 33)
+                servo2_duty++;
+            break;
+        case 'j'    :
+            if(servo2_duty > 16)
+                servo2_duty--;
+            break;
+        case 'i'    :
+            if(servo3_duty < 33)
+                servo3_duty++;
+            break;
+        case 'k'    :
+            if(servo3_duty > 16)
+                servo3_duty--;
+            break;
+
+        }
+        __bis_SR_register(LPM0_bits | GIE); //enable the global interrupt and go to sleep
+        //__bis_SR_register(GIE); //enable the global interrupt and go to sleep
     }
 }
 

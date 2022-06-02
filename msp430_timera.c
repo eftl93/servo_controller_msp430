@@ -9,27 +9,65 @@
 #include "main.h"
 #include "msp430_timera.h"
 
-volatile uint8_t timer_count = 0;
-
+volatile uint16_t timer_count;
+extern volatile uint16_t servo0_duty;
+extern volatile uint16_t servo1_duty;
+extern volatile uint16_t servo2_duty;
+extern volatile uint16_t servo3_duty;
 
 void timera_cc_init(uint16_t capt_comp)
 {
-    TACTL |= 0x0200; //TASSEL = 01; SOURCE CLK IS ACLK## 0b10 for SMCLK
-    TACTL |= 0x0010; //MCx = 01; Mode control is "UP MODE" (counts up to TACCR0)
-    TACCR0 = capt_comp; //set the number of counts for the timer to interrupt
-    TACTL |= 0x0004; //TACLR = 1 We do this to let it know we want to change TIMERA setting and get started
-    TACCTL0 |= 0x0010; // CCIE = 1 ; enable the interrupt
+    TA0CTL |= 0x0200; //TASSEL = 01; SOURCE CLK IS ACLK## 0b10 for SMCLK
+    TA0CTL |= 0x0010; //MCx = 01; Mode control is "UP MODE" (counts up to TACCR0)
+    TA0CCR0 = capt_comp; //set the number of counts for the timer to interrupt
+    TA0CTL |= 0x0004; //TACLR = 1 We do this to let it know we want to change TIMERA setting and get started
+    TA0CCTL0 |= 0x0010; // CCIE = 1 ; enable the interrupt
 }
+
+
 
 #pragma vector = TIMER0_A0_VECTOR
 interrupt void TIMERA0_interrupt(void)
 {
-    timer_count++;
-    if(timer_count >= 20)
+
+    if(timer_count == servo0_duty)
+    {
+        servo0_flag.toggle = 1;
+        //__bic_SR_register_on_exit(LPM0_bits); //clears the bits in the passed variable
+    }
+
+    if(timer_count == servo1_duty)
+    {
+        servo1_flag.toggle = 1;
+        //__bic_SR_register_on_exit(LPM0_bits); //clears the bits in the passed variable
+    }
+
+    if(timer_count == servo2_duty)
+    {
+        servo2_flag.toggle = 1;
+        //__bic_SR_register_on_exit(LPM0_bits); //clears the bits in the passed variable
+    }
+
+    if(timer_count == servo3_duty)
+    {
+        servo3_flag.toggle = 1;
+        //__bic_SR_register_on_exit(LPM0_bits); //clears the bits in the passed variable
+    }
+
+    if(timer_count >= 319)
     {
         timer_count = 0;
-        led1_flag.toggle = 1;
-        __bic_SR_register_on_exit(LPM0_bits); //clears the bits in the passed variable
+        servo0_flag.toggle = 1;
+        servo1_flag.toggle = 1;
+        servo2_flag.toggle = 1;
+        servo3_flag.toggle = 1;
+
+        //__bic_SR_register_on_exit(LPM0_bits); //clears the bits in the passed variable
     }
+
+    timer_count++;
+    __bic_SR_register_on_exit(LPM0_bits); //clears the bits in the passed variable
+
+
 
 }

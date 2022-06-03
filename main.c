@@ -1,3 +1,25 @@
+//Main file for the MSP430G2553 Servo controller
+//DCO is 16MHz which is used for MCLK and SMCLK
+//Frequency of signal is 50Hz
+//Min Poswidth for servo is 1.0 mS which will be a count of 32 in this program
+//Max Poswidth for servo is 2.0 mS which will be a count of 65 in this program
+
+//servo0_duty will change the duty cycle of servo signal on pin 2.0
+//servo1_duty will change the duty cycle of servo signal on pin 2.1
+//servo2_duty will change the duty cycle of servo signal on pin 2.2
+//servo3_duty will change the duty cycle of servo signal on pin 2.3
+
+//Servo controller will receive characters through the uart peripheral
+//uart is running at 115200 baud rate
+//'d' character increases servo0_duty 
+//'a' character decreases servo0_duty
+//'w' character increases servo1_duty
+//'s' character decreases servo1_duty
+//'l' character increases servo0_duty 
+//'j' character decreases servo0_duty
+//'i' character increases servo1_duty
+//'k' character decreases servo1_duty
+
 #include <msp430.h> 
 #include <stdint.h>
 #include "main.h"
@@ -12,9 +34,7 @@ volatile uint16_t servo0_duty = 33;
 volatile uint16_t servo1_duty = 16;
 volatile uint16_t servo2_duty = 65;
 volatile uint16_t servo3_duty = 32;
-/**
- * main.c
- */
+
 int main(void)
 {
 	const uint16_t counter_x = 500;
@@ -30,8 +50,6 @@ int main(void)
 
     while(1)
     {
-
-
         if(servo0_flag.toggle == 1)
         {
             servo0_flag.toggle = 0;
@@ -92,7 +110,6 @@ int main(void)
             if(servo3_duty > 32)
                 servo3_duty--;
             break;
-
         }
         __bis_SR_register(LPM0_bits | GIE); //enable the global interrupt and go to sleep
     }

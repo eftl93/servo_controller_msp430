@@ -12,10 +12,8 @@
 
 void servo_init(void)
 {
-
 	P2DIR |= 0x0F; //P2.0, P2.1, P2.2, P2.3 are set as output
 	P2OUT |= 0xFF;
-
 }
 
 void servo0_high(void)

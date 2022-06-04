@@ -8,8 +8,16 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 
+#define MIN_DUTY 32
+#define MAX_DUTY 65
+#define NEUTRAL_DUTY (MAX_DUTY-MIN_DUTY)/2
+#define COUNTER_COMPARE
+
+//struct is meant to store flags to pending action and current state
 struct flags {
     uint8_t toggle;
+    uint8_t set;
+    uint8_t clear
     uint8_t state;
 };
 
@@ -19,10 +27,5 @@ extern volatile uint16_t servo0_duty;
 extern volatile uint16_t servo1_duty;
 extern volatile uint16_t servo2_duty;
 extern volatile uint16_t servo3_duty;
-/*
-extern const double tick_length;
-extern double period;
-extern double compare_reg_double;
-*/
 
 #endif /* MAIN_H_ */

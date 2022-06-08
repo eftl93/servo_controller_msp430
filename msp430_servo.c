@@ -13,7 +13,7 @@
 void servo_init(void)
 {
 	P2DIR |= 0x0F; //P2.0, P2.1, P2.2, P2.3 are set as output
-	P2OUT |= 0xFF; //Default values of outputs are high, if opto-couplers are to be used, change the corresponding output to low
+	P2OUT |= 0xFF; //Default values of outputs are high
 }
 
 void servo0_set(void)

@@ -50,33 +50,8 @@ int main(void)
 
     while(1)
     {
-
-//After each timer interrupt, cpu wakes up and runs once before going back to sleep
-//check if any servo flag has been updated and toggle its signal accordingly
- /*       if(servo0_flag.toggle)
-        {
-            servo0_flag.toggle = 0;
-            servo0_toggle();
-        }
-
-        if(servo1_flag.toggle)
-        {
-            servo1_flag.toggle = 0;
-            servo1_toggle();
-        }
-
-        if(servo2_flag.toggle)
-         {
-             servo2_flag.toggle = 0;
-             servo2_toggle();
-         }
-
-        if(servo3_flag.toggle)
-         {
-             servo3_flag.toggle = 0;
-             servo3_toggle();
-         }
-*/
+        //After each timer interrupt, cpu wakes up and runs once before going back to sleep
+        //check if any servo flag has been updated and toggle its signal accordingly
         if(servo0_flag.set)
          {
              servo0_flag.set = 0;
@@ -124,8 +99,9 @@ int main(void)
                servo3_flag.clear = 0;
                servo3_clear();
            }
-//after each timer interrupt and updating the servo signals, check if a new command has arrived through uart
-//and update the duty_cycle variable accordingly
+
+          //after each timer interrupt and updating the servo signals, check if a new command has arrived through uart
+          //and update the duty_cycle variable accordingly
         received_byte = uart_rd_char();
         switch(received_byte)
         {

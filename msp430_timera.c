@@ -24,44 +24,6 @@ void timera_cc_init(uint16_t capt_comp)
     TA0CCTL0 |= 0x0010;  // CCIE = 1 ; enable the interrupt
 }
 
-
-/*
-#pragma vector = TIMER0_A0_VECTOR
-interrupt void TIMERA0_interrupt(void)
-{
-
-    if(timer_count == servo0_duty)
-    {
-        servo0_flag.toggle = 1;
-    }
-
-    if(timer_count == servo1_duty)
-    {
-        servo1_flag.toggle = 1;
-    }
-
-    if(timer_count == servo2_duty)
-    {
-        servo2_flag.toggle = 1;
-    }
-
-    if(timer_count == servo3_duty)
-    {
-        servo3_flag.toggle = 1;
-    }
-
-    if(timer_count >= 637)
-    {
-        timer_count = 0;
-        servo0_flag.toggle = 1;
-        servo1_flag.toggle = 1;
-        servo2_flag.toggle = 1;
-        servo3_flag.toggle = 1;
-    }
-
-    timer_count++;
-    __bic_SR_register_on_exit(LPM0_bits); //clears the bits in the passed variable
-*/
 #pragma vector = TIMER0_A0_VECTOR
 interrupt void TIMERA0_interrupt(void)
 {

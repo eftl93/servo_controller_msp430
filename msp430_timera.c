@@ -10,10 +10,10 @@
 #include "msp430_timera.h"
 
 volatile uint16_t timer_count;
-extern volatile uint16_t servo0_duty;
-extern volatile uint16_t servo1_duty;
-extern volatile uint16_t servo2_duty;
-extern volatile uint16_t servo3_duty;
+extern uint16_t servo0_duty;
+extern uint16_t servo1_duty;
+extern uint16_t servo2_duty;
+extern uint16_t servo3_duty;
 
 void timera_cc_init(uint16_t capt_comp)
 {
@@ -25,7 +25,7 @@ void timera_cc_init(uint16_t capt_comp)
 }
 
 
-
+/*
 #pragma vector = TIMER0_A0_VECTOR
 interrupt void TIMERA0_interrupt(void)
 {
@@ -61,7 +61,41 @@ interrupt void TIMERA0_interrupt(void)
 
     timer_count++;
     __bic_SR_register_on_exit(LPM0_bits); //clears the bits in the passed variable
+*/
+#pragma vector = TIMER0_A0_VECTOR
+interrupt void TIMERA0_interrupt(void)
+{
 
+    if(timer_count == servo0_duty)
+    {
+        servo0_flag.clear = 1;
+    }
 
+    if(timer_count == servo1_duty)
+    {
+        servo1_flag.clear = 1;
+    }
+
+    if(timer_count == servo2_duty)
+    {
+        servo2_flag.clear = 1;
+    }
+
+    if(timer_count == servo3_duty)
+    {
+        servo3_flag.clear = 1;
+    }
+
+    if(timer_count >= 637)
+    {
+        timer_count = 0;
+        servo0_flag.set = 1;
+        servo1_flag.set = 1;
+        servo2_flag.set = 1;
+        servo3_flag.set = 1;
+    }
+
+    timer_count++;
+    __bic_SR_register_on_exit(LPM0_bits); //clears the bits in the passed variable
 
 }

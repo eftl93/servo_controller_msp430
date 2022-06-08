@@ -30,14 +30,14 @@ struct flags led0_flag, servo0_flag, servo1_flag, servo2_flag, servo3_flag;
 //servo1_duty will change the duty cycle of servo signal on pin 2.1
 //servo2_duty will change the duty cycle of servo signal on pin 2.2
 //servo3_duty will change the duty cycle of servo signal on pin 2.3
-volatile uint16_t servo0_duty = NEUTRAL_DUTY;
-volatile uint16_t servo1_duty = NEUTRAL_DUTY;
-volatile uint16_t servo2_duty = NEUTRAL_DUTY;
-volatile uint16_t servo3_duty = NEUTRAL_DUTY;
+uint16_t servo0_duty = NEUTRAL_DUTY;
+uint16_t servo1_duty = NEUTRAL_DUTY;
+uint16_t servo2_duty = NEUTRAL_DUTY;
+uint16_t servo3_duty = NEUTRAL_DUTY;
 
 int main(void)
 {
-	const uint16_t counter_x = 500;  //counts to trigger a TimerA interrupt
+	//const uint16_t counter_x = 500;  //counts to trigger a TimerA interrupt
 	uint8_t received_byte = 0xff;    
     WDTCTL  = WDTPW | WDTHOLD;       //stop watchdog timer
     BCSCTL1 =   CALBC1_16MHZ;        //set internal clock range to 16MHz
@@ -53,7 +53,7 @@ int main(void)
 
 //After each timer interrupt, cpu wakes up and runs once before going back to sleep
 //check if any servo flag has been updated and toggle its signal accordingly
-        if(servo0_flag.toggle)
+ /*       if(servo0_flag.toggle)
         {
             servo0_flag.toggle = 0;
             servo0_toggle();
@@ -76,7 +76,54 @@ int main(void)
              servo3_flag.toggle = 0;
              servo3_toggle();
          }
+*/
+        if(servo0_flag.set)
+         {
+             servo0_flag.set = 0;
+             servo0_set();
+         }
 
+         if(servo1_flag.set)
+         {
+             servo1_flag.set = 0;
+             servo1_set();
+         }
+
+         if(servo2_flag.set)
+          {
+              servo2_flag.set = 0;
+              servo2_set();
+          }
+
+         if(servo3_flag.set)
+          {
+              servo3_flag.set = 0;
+              servo3_set();
+          }
+
+         if(servo0_flag.clear)
+          {
+              servo0_flag.clear = 0;
+              servo0_clear();
+          }
+
+          if(servo1_flag.clear)
+          {
+              servo1_flag.clear = 0;
+              servo1_clear();
+          }
+
+          if(servo2_flag.clear)
+           {
+               servo2_flag.clear = 0;
+               servo2_clear();
+           }
+
+          if(servo3_flag.clear)
+           {
+               servo3_flag.clear = 0;
+               servo3_clear();
+           }
 //after each timer interrupt and updating the servo signals, check if a new command has arrived through uart
 //and update the duty_cycle variable accordingly
         received_byte = uart_rd_char();

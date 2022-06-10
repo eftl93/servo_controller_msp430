@@ -4,8 +4,8 @@
 //Min Poswidth for servo is 1.0 mS which will be a count of 32 in this program
 //Max Poswidth for servo is 2.0 mS which will be a count of 65 in this program
 
-//Servo controller will receive characters through the uart peripheral
-//uart is running at 115200 baud rate
+//Servo controller will receive characters through the UART peripheral
+//UART is running at 115200 baud rate
 //'d' character increases servo0_duty 
 //'a' character decreases servo0_duty
 //'w' character increases servo1_duty
@@ -37,12 +37,11 @@ uint16_t servo3_duty = NEUTRAL_DUTY;
 
 int main(void)
 {
-	//const uint16_t counter_x = 500;  //counts to trigger a TimerA interrupt
 	uint8_t received_byte = 0xff;    
     WDTCTL  = WDTPW | WDTHOLD;       //stop watchdog timer
     BCSCTL1 =   CALBC1_16MHZ;        //set internal clock range to 16MHz
     DCOCTL  =   CALDCO_16MHZ;        //set DCO step | modulation
-    BCSCTL2 &= 0xF0;                 //Ensure that DCO resistor is internal | Divder for SMCLK /1
+    BCSCTL2 &= 0xF0;                 //Ensure that DCO resistor is internal | Divider for SMCLK /1
     uart_init();
     led_init();
     servo_init();
@@ -50,8 +49,8 @@ int main(void)
 
     while(1)
     {
-        //After each timer interrupt, cpu wakes up and runs once before going back to sleep
-        //check if any servo flag has been updated and toggle its signal accordingly
+//After each timer interrupt, CPU wakes up and runs once before going back to sleep
+//check if any servo flag has been updated and clear/set its signal accordingly
         if(servo0_flag.set)
          {
              servo0_flag.set = 0;
@@ -100,8 +99,8 @@ int main(void)
                servo3_clear();
            }
 
-          //after each timer interrupt and updating the servo signals, check if a new command has arrived through uart
-          //and update the duty_cycle variable accordingly
+//after each timer interrupt and updating the servo signals, check if a new command has arrived through uart
+//and update the duty_cycle variable accordingly
         received_byte = uart_rd_char();
         switch(received_byte)
         {

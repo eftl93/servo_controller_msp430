@@ -1,4 +1,6 @@
 # servo_controller_msp430
+![image](https://user-images.githubusercontent.com/86902176/174351745-566496b7-6b94-4d67-b228-3ee8d65ea0e0.png)
+
 Servo controller for 4 servos using MSP430G2553
 ## Abstract
 The goal of this project is to create an independent module to control 4 servo motors with a UART interface. 

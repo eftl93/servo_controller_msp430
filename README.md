@@ -1,9 +1,10 @@
 # servo_controller_msp430
-![image](https://user-images.githubusercontent.com/86902176/174351745-566496b7-6b94-4d67-b228-3ee8d65ea0e0.png)
+![image](https://user-images.githubusercontent.com/86902176/174351745-566496b7-6b94-4d67-b228-3ee8d65ea0e0.png) ![image](https://user-images.githubusercontent.com/86902176/174352603-34216107-ba7f-4045-8db4-1189ea6a21d5.png)
+
 
 Servo controller for 4 servos using MSP430G2553
 ## Abstract
-The goal of this project is to create an independent module to control 4 servo motors with a UART interface. 
+The goal of this project is to create an independent module to control 4 servo motors with a UART interface (PCB was designed for expansion, up to 5 servos and also including SPI communication port). 
 
 This module is meant to be added to projects that require 4 additional PWM signals that have enough resolution to control servo motors. It can also be used independently if paired up directly to a computer via USB-UART converter or connecting it to a Bluetooth Module that accepts UART communication. 
 

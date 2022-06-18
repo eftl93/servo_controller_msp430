@@ -1,8 +1,14 @@
 # servo_controller_msp430
-![image](https://user-images.githubusercontent.com/86902176/174351745-566496b7-6b94-4d67-b228-3ee8d65ea0e0.png) ![image](https://user-images.githubusercontent.com/86902176/174352603-34216107-ba7f-4045-8db4-1189ea6a21d5.png)
+
+![image](https://user-images.githubusercontent.com/86902176/174351745-566496b7-6b94-4d67-b228-3ee8d65ea0e0.png) 
+
+Board layout for servo controller
 
 
-Servo controller for 4 servos using MSP430G2553
+
+
+![image](https://user-images.githubusercontent.com/86902176/174352603-34216107-ba7f-4045-8db4-1189ea6a21d5.png)
+Schematic for Servo controller for 4 servos using MSP430G2553
 ## Abstract
 The goal of this project is to create an independent module to control 4 servo motors with a UART interface (PCB was designed for expansion, up to 5 servos and also including SPI communication port). 
 
@@ -11,6 +17,14 @@ This module is meant to be added to projects that require 4 additional PWM signa
 The microcontroller of choice is the MSP430G2553, TIMER_A module was used to keep track of time and create an interrupt to wake up the processor after a set amount of time. The MCU is running at 16 MHz generated internally and the timer module is running using the SMCLK without post-scaling. Code Composer Studio 11.1.0 was used to develop and debug. 
 
 The prototype is built on a perboard, it includes an onboard low-dropout 3.3V regulator. Headers are included to program via MSP-FET Flash Emulation Tool. Pinouts are soldered in order to connect Servo Motors with standard connectors. An additional 32 KHz crystal was included for future functionality expansions. The power connector is connected to the servo power pins directly therefor the maximum voltage for this prototype is 6V. In this code the characters: 'w', 's', 'a', 'd', 'i', 'k', 'j', and 'l' are used to increment and decrement the duty cycle of all 4 servo ports.  
+
+![image](https://user-images.githubusercontent.com/86902176/174415145-27fbc30d-8f04-4f45-bdb8-0451dbc002c3.png)
+Positive width (Delta X) on Channel 2 (Servo0) can be seen decreasing after it receives a character on Channel 1 (character 'a'). It stays the same if no character is received. 
+
+ 
+ 
+![image](https://user-images.githubusercontent.com/86902176/174415436-93b906b4-8196-4b2d-a725-984ebef13b29.png)
+Image of Channel 1 zoomed in showing character 'a'
 
 ## Method of execution
 It was decided to use “soft-PWM” method in order to control more than 2 servos with only one timer in order to leave the second timer (TA1) available in case it’s needed for additional functions also so any GPIO can be used for servos. Signals for servos need to have a specific frequency of 50 Hz and a positive with that ranges from 1 mS to 2 mS required specific timing. 

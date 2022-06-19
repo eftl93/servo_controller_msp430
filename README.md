@@ -40,10 +40,10 @@ It was decided to use “soft-PWM” method in order to control more than 2 serv
     - Enable the interrupt.
 
 6. Create the ISR (interrupt service routine) to count "ticks" and update the flag for each corresponding servo":
-    - check how many times has the interrupt has been activated by the timer (how many ticks).
-    - if the number of ticks accumulated equals to the duty cycle, set the servo's "clear" flag.
-    - if the number of ticks accumulated equals to the period, set the all the servos' "set" flag.
-    - before exiting the ISR, increment the tick counter (timer_count).
+    - Check how many times has the interrupt has been activated by the timer (how many ticks).
+    - If the number of ticks accumulated equals to the duty cycle, set the servo's "clear" flag.
+    - If the number of ticks accumulated equals to the period, set the all the servos' "set" flag.
+    - Before exiting the ISR, increment the tick counter (timer_count).
     - When exiting ISR, clear bit in SR to disable the LPM (in order to go back to the main()).
 8. Run the main() function:
     - Check if any flags have been updated in the ISR.

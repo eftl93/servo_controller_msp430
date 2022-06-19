@@ -16,7 +16,7 @@ This module is meant to be added to projects that require 4 additional PWM signa
 
 The microcontroller of choice is the MSP430G2553, TIMER_A module was used to keep track of time and create an interrupt to wake up the processor after a set amount of time. The MCU is running at 16 MHz generated internally and the timer module is running using the SMCLK without post-scaling. Code Composer Studio 11.1.0 was used to develop and debug. 
 
-The prototype is built on a perboard, it includes an onboard low-dropout 3.3V regulator. Headers are included to program via MSP-FET Flash Emulation Tool. Pinouts are soldered in order to connect Servo Motors with standard connectors. An additional 32 KHz crystal was included for future functionality expansions. The power connector is connected to the servo power pins directly therefor the maximum voltage for this prototype is 6V. In this code the characters: 'w', 's', 'a', 'd', 'i', 'k', 'j', and 'l' are used to increment and decrement the duty cycle of all 4 servo ports.  
+The prototype is built on a perfboard, it includes an onboard low-dropout 3.3V regulator. Headers are included to program via MSP-FET Flash Emulation Tool. Pinouts are soldered in order to connect Servo Motors with standard connectors. An additional 32 KHz crystal was included for future functionality expansions. The power connector is connected to the servo power pins directly therefore the maximum voltage for this prototype is 6V. In this code the characters: 'w', 's', 'a', 'd', 'i', 'k', 'j', and 'l' are used to increment and decrement the duty cycle of all 4 servo ports.  
 
 ![image](https://user-images.githubusercontent.com/86902176/174415145-27fbc30d-8f04-4f45-bdb8-0451dbc002c3.png)
 Positive width (Delta X) on Channel 2 (Servo0) can be seen decreasing after it receives a character on Channel 1 (character 'a'). It stays the same if no character is received. 
@@ -27,7 +27,7 @@ Positive width (Delta X) on Channel 2 (Servo0) can be seen decreasing after it r
 Image of Channel 1 zoomed in showing character 'a'
 
 ## Method of execution
-It was decided to use “soft-PWM” method in order to control more than 2 servos with only one timer in order to leave the second timer (TA1) available in case it’s needed for additional functions also so any GPIO can be used for servos. Signals for servos need to have a specific frequency of 50 Hz and a positive with that ranges from 1 mS to 2 mS required specific timing. 
+It was decided to use “soft-PWM” method in order to control more than 2 servos with only one timer in order to leave the second timer (TA1) available in case it’s needed for additional functions also so any GPIO can be used for servos. Signals for servos need to have a specific frequency of 50 Hz and a positive width that ranges from 1 mS to 2 mS required specific timing. 
 
 1. Disable watchdog timer.
 2. Set internal clock source.
@@ -36,7 +36,7 @@ It was decided to use “soft-PWM” method in order to control more than 2 serv
 5. Initialize the timer module.
     - Set the time source.
     - Put the timer in “UP MODE”.
-    - Set how frequent to get the timer to interrupt and exit the "Low Power Mode".
+    - Set how frequent to get the timer to interrupt and wakeup the processor.
     - Enable the interrupt.
 
 6. Create the ISR (interrupt service routine) to count "ticks" and update the flag for each corresponding servo":
@@ -44,7 +44,7 @@ It was decided to use “soft-PWM” method in order to control more than 2 serv
     - if the number of ticks accumulated equals to the duty cycle, set the servo's "clear" flag.
     - if the number of ticks accumulated equals to the period, set the all the servos' "set" flag.
     - before exiting the ISR, increment the tick counter (timer_count).
-    - use directive to clear bit of the status register to leave the low power mode once the ISR is exited in order to execute the code in the main() function until the processor goes back to low power mode.
+    - When exiting ISR, clear bit in SR to disable the LPM (in order to go back to the main()).
 8. Run the main() function:
     - Check if any flags have been updated in the ISR.
       - Set flags will be cleared.

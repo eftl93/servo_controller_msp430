@@ -12,4 +12,7 @@ void led_init(void);
 void led0_high(void);
 void led0_low(void);
 void led0_toggle(void);
+void led1_high(void);
+void led1_low(void);
+void led1_toggle(void);
 #endif /* MSP430_LED_H_ */

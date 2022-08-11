@@ -23,7 +23,7 @@
 #include "msp430_led.h"
 #include "msp430_servo.h"
 
-struct flags led0_flag, servo0_flag, servo1_flag, servo2_flag, servo3_flag;
+struct flags led0_flag, led1_flag, servo0_flag, servo1_flag, servo2_flag, servo3_flag;
 
 
 //servo0_duty will change the duty cycle of servo signal on pin 2.0
@@ -34,6 +34,7 @@ uint16_t servo0_duty = NEUTRAL_DUTY;
 uint16_t servo1_duty = NEUTRAL_DUTY;
 uint16_t servo2_duty = NEUTRAL_DUTY;
 uint16_t servo3_duty = NEUTRAL_DUTY;
+
 
 int main(void)
 {
@@ -99,6 +100,17 @@ int main(void)
                servo3_clear();
            }
 
+          if(led0_flag.toggle)
+          {
+              led0_flag.toggle = 0;
+              led0_toggle();
+          }
+
+          if(led1_flag.toggle)
+          {
+              led1_flag.toggle = 0;
+              led1_toggle();
+          }
 //after each timer interrupt and updating the servo signals, check if a new command has arrived through uart
 //and update the duty_cycle variable accordingly
         received_byte = uart_rd_char();

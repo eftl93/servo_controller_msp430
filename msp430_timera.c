@@ -48,13 +48,15 @@ interrupt void TIMERA0_interrupt(void)
         servo3_flag.clear = 1;
     }
 
-    if(timer_count >= 637)
+    if(timer_count >= 1059)
     {
         timer_count = 0;
         servo0_flag.set = 1;
         servo1_flag.set = 1;
         servo2_flag.set = 1;
         servo3_flag.set = 1;
+        led0_flag.toggle = 1;
+        led1_flag.toggle = 1;
     }
 
     timer_count++;

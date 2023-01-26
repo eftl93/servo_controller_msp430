@@ -1,14 +1,16 @@
-# servo_controller_msp430
+# Servo Controller Board
+The goal of this project is to create an independent module to control 4 servo motors with a UART interface (PCB was designed for expansion, up to 5 servos and also including SPI communication port). 
 
-![image](https://user-images.githubusercontent.com/86902176/174351745-566496b7-6b94-4d67-b228-3ee8d65ea0e0.png) 
-
-Board layout for servo controller
-
+I'm also posting this project in hackster.io: https://www.hackster.io/ederfernandotorres3/servo-controller-board-with-msp430-timer-interrupts-33bb74
 
 
+Variant 1: Servo Controller Board with opto-couplers
+<img src="https://user-images.githubusercontent.com/86902176/214722878-fd6a8ced-1665-4fd3-95fd-786468ef3a00.png" width="700">
 
-![image](https://user-images.githubusercontent.com/86902176/174352603-34216107-ba7f-4045-8db4-1189ea6a21d5.png)
-Schematic for Servo controller for 4 servos using MSP430G2553
+Variant 2: Servo Controller Board without opto-couplers
+<img src="https://user-images.githubusercontent.com/86902176/214723502-5fc34830-55db-46dc-b5db-d1691fa39c9a.png" width="700">
+
+
 ## Abstract
 The goal of this project is to create an independent module to control 4 servo motors with a UART interface (PCB was designed for expansion, up to 5 servos and also including SPI communication port). 
 
